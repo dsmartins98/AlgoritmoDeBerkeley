@@ -1,0 +1,13 @@
+Lógica de Ordenação do relógio
+
+A máquina mestre realiza uma requisição para cada máquina cliente (escravo) para obter seus horários. Após obter o horário de cada máquina, é realizada uma média com esses horários (inclusive com o horário da propria máquina mestre) e dividido pelo número de máquinas (clientes e servidor). A média obtida é o novo horário de cada máquina desta rede (incluindo o servidor).
+
+OBS.: Deve-se atentar que haverá uma faixa de horario máximo e mínimo com o objetivo de filtrar máquinas que possuem seu horário dentro dessa faixa para que a média a ser realizada não seja interferida por alguma máquina que tenha um horário muito absurdo.
+
+OBS.: O novo horário estabelecido será o horario que cada máquina deverá possuir. Entretanto, para setar este novo horário na maquina de cada cliente, o servidor deverá enviar os minutos a mais ou a menos para que o cliente atrase ou adiante seu horário. Isto é feito para que não aja incerteza nos novos horários de cada máquina (considerando que as máquinas clientes, quando o sevridor estiver fazendo todo esse calculo das metas e etc, elas continuam correndo o tempo normlamente até ser recebido o valor para alterar para um novo horário).
+
+Para reajustar cada relógio, segue o algoritmo:
+
+	- É pego a diferença individual de cada relógio e inverte o sinal (multiplicando por - 1) e soma-se com a média obtida anteriormente.
+
+Desta forma, retornam-se os minutos que precisam ser reajustados na máquina de cada cliente.
