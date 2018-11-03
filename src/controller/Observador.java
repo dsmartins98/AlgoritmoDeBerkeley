@@ -13,5 +13,8 @@ public interface Observador {
     
     public void atualizaStatus(String status);
     public void exibirErro(String erro);
+    public void inserirHorarioAtual(String horario);
+    public String getHora();
+    public String getMinuto();
     
 }

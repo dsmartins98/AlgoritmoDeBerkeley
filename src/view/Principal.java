@@ -13,19 +13,22 @@ import javax.swing.JOptionPane;
  *
  * @author dougl
  */
-public class Principal extends javax.swing.JFrame implements Observador{
+public class Principal extends javax.swing.JFrame implements Observador {
 
     private Controller controller;
-    
+
     /**
      * Creates new form Principal
      */
     public Principal() {
         controller = new Controller();
         controller.addObservador(this);
-                
+
         initComponents();
-        
+
+        //setando horario atual
+        Controller.iniciarHorario();
+
         setResizable(false);
         setLocationRelativeTo(null);
     }
@@ -350,5 +353,20 @@ public class Principal extends javax.swing.JFrame implements Observador{
     @Override
     public void exibirErro(String erro) {
         JOptionPane.showMessageDialog(null, erro);
+    }
+
+    @Override
+    public String getHora() {
+        return txtHora.getText();
+    }
+
+    @Override
+    public String getMinuto() {
+        return txtMinuto.getText();
+    }
+
+    @Override
+    public void inserirHorarioAtual(String horario) {
+        lblHorarioAtual.setText(horario);
     }
 }

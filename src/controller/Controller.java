@@ -10,8 +10,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Configuracao;
@@ -22,11 +27,14 @@ import model.Configuracao;
  */
 public class Controller implements Observado {
 
-    private List<Observador> observadores = new ArrayList<>();
+    private static List<Observador> observadores = new ArrayList<>();
     private Configuracao configuracao;
     private Socket conn = null;
     private BufferedReader in = null;
     private PrintWriter out;
+    private static String horaAtual;
+    private static String minutoAtual;
+    private static String segundoAtual;
 
     @Override
     public void addObservador(Observador obs) {
@@ -46,9 +54,12 @@ public class Controller implements Observado {
         try {
             conn = new Socket(configuracao.getEndereco(), configuracao.getPorta());
             atualizaStatus("Conectado!");
-            
+
             //realizar aqui um loop infinito para receber e enviar dados do servidor
-            
+            while (true) {
+
+            }
+
         } catch (IOException ex) {
             atualizaStatus("Não foi possível conectar!");
             exibirErro(ex.getMessage());
@@ -66,6 +77,27 @@ public class Controller implements Observado {
         for (Observador obs : observadores) {
             obs.exibirErro(erro);
         }
+    }
+
+    public static void iniciarHorario() {
+        
+        int delay = 1000; // delay de 1 seg.
+        int interval = 1000; // intervalo de 1 minuto.
+        Timer timer = new Timer();
+
+        timer.schedule(new TimerTask() {
+            public void run() {
+
+                SimpleDateFormat hora = new SimpleDateFormat("HH");
+                SimpleDateFormat minuto = new SimpleDateFormat("mm");
+                SimpleDateFormat segundo = new SimpleDateFormat("ss");
+                horaAtual = hora.format(new Date());
+                minutoAtual = minuto.format(new Date());
+                segundoAtual = segundo.format(new Date());
+                String horarioAtual = horaAtual + ":" + minutoAtual + ":" + segundoAtual;
+                observadores.get(0).inserirHorarioAtual(horarioAtual);
+            }
+        }, delay, interval);
     }
 
 }
