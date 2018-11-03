@@ -58,6 +58,14 @@ public class Controller implements Observado {
             //realizar aqui um loop infinito para receber e enviar dados do servidor
             while (true) {
 
+                //Envia horario atual assim que a conexão é realizada
+                out = new PrintWriter(conn.getOutputStream(), true);
+                String horarioAtual = horaAtual + ":" + minutoAtual;
+                out.print(horarioAtual);
+                
+                //aguarda o servidor enviar mais uma requisição solicitando o horario
+                in = new BufferedReader(new InputStreamReader(conn.getInputStream()));                                
+
             }
 
         } catch (IOException ex) {
@@ -80,7 +88,7 @@ public class Controller implements Observado {
     }
 
     public static void iniciarHorario() {
-        
+
         int delay = 1000; // delay de 1 seg.
         int interval = 1000; // intervalo de 1 minuto.
         Timer timer = new Timer();
