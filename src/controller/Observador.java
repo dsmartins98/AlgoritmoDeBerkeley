@@ -16,5 +16,6 @@ public interface Observador {
     public void inserirHorarioAtual(String horario);
     public String getHora();
     public String getMinuto();
+    public void liberarCamposNovoHorario();
     
 }

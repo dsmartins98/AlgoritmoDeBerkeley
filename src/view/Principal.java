@@ -30,7 +30,8 @@ public class Principal extends javax.swing.JFrame implements Observador {
         Controller.iniciarHorario();
 
         setResizable(false);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null);        
+        
     }
 
     /**
@@ -368,5 +369,11 @@ public class Principal extends javax.swing.JFrame implements Observador {
     @Override
     public void inserirHorarioAtual(String horario) {
         lblHorarioAtual.setText(horario);
+    }
+
+    @Override
+    public void liberarCamposNovoHorario() {
+        txtHora.setEnabled(true);
+        txtMinuto.setEnabled(true);
     }
 }
